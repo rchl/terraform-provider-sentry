@@ -100,27 +100,27 @@ func dataSourceSentryIssueAlertRead(ctx context.Context, d *schema.ResourceData,
 		return diag.FromErr(err)
 	}
 
-	conditions := make([]interface{}, 0, len(alert.Conditions))
-	for _, condition := range alert.Conditions {
-		conditions = append(conditions, *condition)
-	}
-	filters := make([]interface{}, 0, len(alert.Filters))
-	for _, filter := range alert.Filters {
-		filters = append(filters, *filter)
-	}
-	actions := make([]interface{}, 0, len(alert.Actions))
-	for _, action := range alert.Actions {
-		actions = append(actions, *action)
-	}
+	// conditions := make([]interface{}, 0, len(alert.Conditions))
+	// for _, condition := range alert.Conditions {
+	// 	conditions = append(conditions, *condition)
+	// }
+	// filters := make([]interface{}, 0, len(alert.Filters))
+	// for _, filter := range alert.Filters {
+	// 	filters = append(filters, *filter)
+	// }
+	// actions := make([]interface{}, 0, len(alert.Actions))
+	// for _, action := range alert.Actions {
+	// 	actions = append(actions, *action)
+	// }
 
 	d.SetId(buildThreePartID(org, project, sentry.StringValue(alert.ID)))
 	retErr := multierror.Append(
 		d.Set("organization", org),
 		d.Set("project", project),
 		d.Set("internal_id", alert.ID),
-		d.Set("conditions", conditions),
-		d.Set("filters", filters),
-		d.Set("actions", actions),
+		// d.Set("conditions", conditions),
+		// d.Set("filters", filters),
+		// d.Set("actions", actions),
 		d.Set("action_match", alert.ActionMatch),
 		d.Set("filter_match", alert.FilterMatch),
 		d.Set("frequency", alert.Frequency),
